@@ -1,1 +1,233 @@
-PLACEHOLDER_FOR_FULL_CONTENT
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>MONARK // Dark Nebula</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800&family=Cinzel:wght@400;600;700&family=Rajdhani:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold: #d4af37;
+  --gold-light: #f0d78c;
+  --bg: #05020f;
+  --glass: rgba(15, 10, 30, 0.55);
+  --glass-border: rgba(212, 175, 55, 0.28);
+}
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+body {
+  min-height:100vh; min-height:100dvh;
+  background: var(--bg);
+  font-family: 'Rajdhani', sans-serif;
+  color: #e8e0ff;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  position:relative; overflow-x:hidden;
+}
+.stars {
+  position:fixed; inset:0; z-index:0;
+  background-image: 
+    radial-gradient(1px 1px at 20% 30%, #fff, transparent),
+    radial-gradient(1px 1px at 60% 70%, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 50% 50%, #c4b5fd, transparent),
+    radial-gradient(1px 1px at 80% 10%, #fff, transparent),
+    radial-gradient(1px 1px at 10% 80%, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 90% 40%, #f0d78c, transparent);
+  background-size: 220px 220px, 300px 300px, 250px 250px, 180px 180px, 240px 240px, 280px 280px;
+  animation: drift 80s linear infinite;
+  opacity:0.55;
+}
+@keyframes drift { from { transform:translateY(0); } to { transform:translateY(-220px); } }
+.nebula {
+  position:fixed; border-radius:50%; filter:blur(110px); opacity:0.32; z-index:0;
+  animation: pulse 12s ease-in-out infinite;
+}
+.n1 { width:420px; height:420px; background:#7c3aed; top:-160px; left:-120px; }
+.n2 { width:380px; height:380px; background:#db2777; bottom:-140px; right:-100px; animation-delay:-5s; }
+.n3 { width:260px; height:260px; background:#0891b2; top:45%; left:55%; animation-delay:-8s; }
+@keyframes pulse { 0%,100% { transform:scale(1); opacity:0.28; } 50% { transform:scale(1.18); opacity:0.42; } }
+.portal {
+  position:relative; z-index:10;
+  width:100%; max-width:400px; padding:22px 18px 28px;
+  display:flex; flex-direction:column; align-items:center; gap:18px;
+}
+.logo-circle {
+  width:120px; height:120px;
+  border-radius:50%;
+  background: linear-gradient(145deg, rgba(212,175,55,0.15), rgba(124,58,237,0.2));
+  border: 2px solid rgba(212,175,55,0.5);
+  display:flex; align-items:center; justify-content:center;
+  font-size:48px;
+  box-shadow: 0 0 30px rgba(212,175,55,0.3);
+  animation: logoGlow 4s ease-in-out infinite;
+}
+@keyframes logoGlow {
+  0%,100% { box-shadow: 0 0 20px rgba(212,175,55,0.3); }
+  50% { box-shadow: 0 0 40px rgba(212,175,55,0.55); }
+}
+.title {
+  font-family: 'Cinzel', serif; font-weight:700; font-size:1.8rem;
+  letter-spacing:6px; color: var(--gold-light);
+  text-shadow: 0 0 28px rgba(212,175,55,0.4);
+  margin-top:4px;
+}
+.subtitle {
+  font-size:0.82rem; letter-spacing:3.5px; color:rgba(196,181,253,0.72);
+  text-transform:uppercase; margin-top:-4px;
+}
+.status {
+  display:inline-flex; align-items:center; gap:8px;
+  font-size:0.76rem; color:#a78bfa; letter-spacing:1.5px; margin-top:2px;
+}
+.status-dot {
+  width:7px; height:7px; background:#c4b5fd; border-radius:50%;
+  box-shadow:0 0 10px #c4b5fd; animation:blink 1.8s infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.25} }
+.menu {
+  width:100%; display:flex; flex-direction:column; gap:13px;
+  margin-top:6px;
+}
+.card {
+  position:relative;
+  background: var(--glass);
+  backdrop-filter: blur(22px) saturate(160%);
+  -webkit-backdrop-filter: blur(22px) saturate(160%);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  padding: 17px 20px;
+  display:flex; align-items:center; gap:15px;
+  text-decoration:none; color:inherit;
+  overflow:hidden;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  box-shadow: 
+    0 8px 32px rgba(0,0,0,0.35),
+    inset 0 1px 0 rgba(255,255,255,0.06);
+}
+.card::before {
+  content:'';
+  position:absolute; inset:0;
+  background: linear-gradient(115deg, transparent 30%, rgba(255,255,255,0.09) 50%, transparent 70%);
+  transform: translateX(-120%) skewX(-15deg);
+  transition: transform 0.7s ease;
+}
+.card:hover::before, .card:active::before {
+  transform: translateX(120%) skewX(-15deg);
+}
+.card:hover, .card:active {
+  transform: translateY(-4px) scale(1.025);
+  border-color: rgba(212,175,55,0.55);
+  box-shadow: 
+    0 16px 40px rgba(0,0,0,0.45),
+    0 0 35px rgba(212,175,55,0.18),
+    inset 0 1px 0 rgba(255,255,255,0.1);
+}
+.card-icon {
+  width:50px; height:50px; border-radius:15px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:22px; flex-shrink:0;
+  background: linear-gradient(145deg, rgba(212,175,55,0.18), rgba(124,58,237,0.22));
+  border: 1px solid rgba(212,175,55,0.35);
+  box-shadow: 0 0 18px rgba(212,175,55,0.12);
+  transition: all 0.35s ease;
+}
+.card:hover .card-icon {
+  transform: scale(1.08);
+  box-shadow: 0 0 24px rgba(212,175,55,0.25);
+}
+.card-title {
+  font-family:'Orbitron',sans-serif; font-weight:600; font-size:0.98rem;
+  letter-spacing:1.4px; color:#fef3c7; margin-bottom:2px;
+}
+.card-desc { font-size:0.8rem; color:rgba(196,181,253,0.68); }
+.card-arrow {
+  font-size:20px; color:var(--gold); opacity:0.45;
+  transition: all 0.35s ease; margin-left:auto;
+}
+.card:hover .card-arrow {
+  opacity:1; transform: translateX(5px);
+  text-shadow: 0 0 12px var(--gold);
+}
+.footer {
+  display:flex; flex-direction:column; align-items:center; gap:10px;
+  margin-top:10px; width:100%;
+}
+.signature {
+  text-align:center;
+  font-size:0.72rem;
+  letter-spacing:1.2px;
+  color:rgba(167,139,250,0.55);
+  line-height:1.5;
+}
+.signature strong {
+  color:rgba(212,175,55,0.75);
+  font-weight:600;
+}
+.portal > * {
+  animation: fadeUp 0.7s ease both;
+}
+.portal > *:nth-child(1) { animation-delay:0.05s; }
+.portal > *:nth-child(2) { animation-delay:0.12s; }
+.portal > *:nth-child(3) { animation-delay:0.18s; }
+.portal > *:nth-child(4) { animation-delay:0.24s; }
+.portal > *:nth-child(5) { animation-delay:0.3s; }
+.portal > *:nth-child(6) { animation-delay:0.4s; }
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(18px); }
+  to { opacity:1; transform:translateY(0); }
+}
+</style>
+</head>
+<body>
+<div class="stars"></div>
+<div class="nebula n1"></div>
+<div class="nebula n2"></div>
+<div class="nebula n3"></div>
+
+<div class="portal">
+  <div class="logo-circle">◈</div>
+  <div class="title">MONARK</div>
+  <div class="subtitle">Dark Nebula Portal</div>
+  <div class="status"><div class="status-dot"></div> SYSTÈME EN LIGNE</div>
+
+  <div class="menu">
+    <a href="tel:+15142165549" class="card">
+      <div class="card-icon">📞</div>
+      <div style="flex:1">
+        <div class="card-title">APPELER</div>
+        <div class="card-desc">+1 (514) 216-5549</div>
+      </div>
+      <div class="card-arrow">›</div>
+    </a>
+    <a href="https://monarkapp.milele4ever.com" target="_blank" rel="noopener" class="card">
+      <div class="card-icon">⚡</div>
+      <div style="flex:1">
+        <div class="card-title">MONARK APP</div>
+        <div class="card-desc">Ouvrir l'application</div>
+      </div>
+      <div class="card-arrow">›</div>
+    </a>
+    <a href="https://www.milele4ever.com" target="_blank" rel="noopener" class="card">
+      <div class="card-icon">🌐</div>
+      <div style="flex:1">
+        <div class="card-title">MILELE4EVER</div>
+        <div class="card-desc">Site officiel</div>
+      </div>
+      <div class="card-arrow">›</div>
+    </a>
+  </div>
+
+  <div class="footer">
+    <div class="signature">
+      <strong>Kent Ley</strong> — CEO<br>
+      Tous droits réservés © 2026
+    </div>
+  </div>
+</div>
+
+<script>
+document.querySelectorAll('.card').forEach(card => {
+  card.addEventListener('touchstart', () => card.style.transform = 'scale(0.97)');
+  card.addEventListener('touchend', () => card.style.transform = '');
+});
+</script>
+</body>
+</html>
