@@ -1,469 +1,248 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>MONARK // ACCESS PORTAL</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --neon-cyan: #00f3ff;
-            --neon-purple: #bf00ff;
-            --neon-pink: #ff00aa;
-            --neon-blue: #0066ff;
-            --dark-bg: #05050f;
-            --glass: rgba(10, 15, 30, 0.65);
-            --glow: 0 0 20px;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        body {
-            min-height: 100vh;
-            min-height: 100dvh;
-            background: var(--dark-bg);
-            font-family: 'Rajdhani', sans-serif;
-            color: #e0f7ff;
-            overflow-x: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-
-        /* Animated background */
-        .bg-grid {
-            position: fixed;
-            inset: 0;
-            background-image: 
-                linear-gradient(rgba(0, 243, 255, 0.03) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 243, 255, 0.03) 1px, transparent 1px);
-            background-size: 40px 40px;
-            z-index: 0;
-            animation: gridMove 20s linear infinite;
-        }
-
-        @keyframes gridMove {
-            0% { transform: translateY(0); }
-            100% { transform: translateY(40px); }
-        }
-
-        .particles {
-            position: fixed;
-            inset: 0;
-            z-index: 0;
-            overflow: hidden;
-            pointer-events: none;
-        }
-
-        .particle {
-            position: absolute;
-            width: 2px;
-            height: 2px;
-            background: var(--neon-cyan);
-            border-radius: 50%;
-            opacity: 0.6;
-            animation: float linear infinite;
-        }
-
-        @keyframes float {
-            0% { transform: translateY(100vh) scale(0); opacity: 0; }
-            10% { opacity: 0.8; }
-            90% { opacity: 0.8; }
-            100% { transform: translateY(-10vh) scale(1); opacity: 0; }
-        }
-
-        /* Glow orbs */
-        .orb {
-            position: fixed;
-            border-radius: 50%;
-            filter: blur(80px);
-            opacity: 0.4;
-            z-index: 0;
-            animation: pulse 8s ease-in-out infinite;
-        }
-
-        .orb-1 {
-            width: 300px;
-            height: 300px;
-            background: var(--neon-purple);
-            top: -100px;
-            left: -100px;
-        }
-
-        .orb-2 {
-            width: 250px;
-            height: 250px;
-            background: var(--neon-cyan);
-            bottom: -80px;
-            right: -80px;
-            animation-delay: -3s;
-        }
-
-        .orb-3 {
-            width: 200px;
-            height: 200px;
-            background: var(--neon-pink);
-            top: 40%;
-            right: 10%;
-            animation-delay: -5s;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); opacity: 0.3; }
-            50% { transform: scale(1.2); opacity: 0.5; }
-        }
-
-        /* Main container */
-        .portal {
-            position: relative;
-            z-index: 10;
-            width: 100%;
-            max-width: 420px;
-            padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 28px;
-        }
-
-        /* Header */
-        .header {
-            text-align: center;
-            position: relative;
-        }
-
-        .logo-ring {
-            width: 90px;
-            height: 90px;
-            border: 2px solid var(--neon-cyan);
-            border-radius: 50%;
-            margin: 0 auto 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            box-shadow: var(--glow) var(--neon-cyan), inset 0 0 20px rgba(0, 243, 255, 0.2);
-            animation: ringPulse 3s ease-in-out infinite;
-        }
-
-        .logo-ring::before {
-            content: '';
-            position: absolute;
-            inset: -8px;
-            border: 1px solid rgba(0, 243, 255, 0.3);
-            border-radius: 50%;
-            animation: spin 12s linear infinite;
-        }
-
-        .logo-ring::after {
-            content: '';
-            position: absolute;
-            inset: -16px;
-            border: 1px dashed rgba(191, 0, 255, 0.4);
-            border-radius: 50%;
-            animation: spin 18s linear infinite reverse;
-        }
-
-        @keyframes ringPulse {
-            0%, 100% { box-shadow: 0 0 20px var(--neon-cyan), inset 0 0 20px rgba(0, 243, 255, 0.2); }
-            50% { box-shadow: 0 0 40px var(--neon-cyan), 0 0 60px rgba(0, 243, 255, 0.3), inset 0 0 30px rgba(0, 243, 255, 0.3); }
-        }
-
-        @keyframes spin {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
-        }
-
-        .logo-icon {
-            font-size: 36px;
-            filter: drop-shadow(0 0 8px var(--neon-cyan));
-        }
-
-        .title {
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 800;
-            font-size: 1.7rem;
-            letter-spacing: 4px;
-            background: linear-gradient(90deg, var(--neon-cyan), var(--neon-purple), var(--neon-pink));
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 0 0 30px rgba(0, 243, 255, 0.3);
-            margin-bottom: 6px;
-        }
-
-        .subtitle {
-            font-size: 0.95rem;
-            letter-spacing: 3px;
-            color: rgba(0, 243, 255, 0.7);
-            text-transform: uppercase;
-            font-weight: 500;
-        }
-
-        .status {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            margin-top: 12px;
-            font-size: 0.8rem;
-            color: #00ff9d;
-            letter-spacing: 1px;
-        }
-
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            background: #00ff9d;
-            border-radius: 50%;
-            box-shadow: 0 0 10px #00ff9d;
-            animation: blink 1.5s infinite;
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
-        }
-
-        /* Menu cards */
-        .menu {
-            width: 100%;
-            display: flex;
-            flex-direction: column;
-            gap: 16px;
-        }
-
-        .card {
-            position: relative;
-            background: var(--glass);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(0, 243, 255, 0.25);
-            border-radius: 16px;
-            padding: 20px 22px;
-            display: flex;
-            align-items: center;
-            gap: 18px;
-            text-decoration: none;
-            color: inherit;
-            transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-            overflow: hidden;
-            cursor: pointer;
-        }
-
-        .card::before {
-            content: '';
-            position: absolute;
-            inset: 0;
-            background: linear-gradient(120deg, transparent, rgba(0, 243, 255, 0.08), transparent);
-            transform: translateX(-100%);
-            transition: transform 0.6s;
-        }
-
-        .card:hover::before,
-        .card:active::before {
-            transform: translateX(100%);
-        }
-
-        .card:hover,
-        .card:active {
-            border-color: var(--neon-cyan);
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 
-                0 10px 40px rgba(0, 0, 0, 0.4),
-                0 0 30px rgba(0, 243, 255, 0.25),
-                inset 0 0 20px rgba(0, 243, 255, 0.05);
-        }
-
-        .card-icon {
-            width: 52px;
-            height: 52px;
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            flex-shrink: 0;
-            position: relative;
-        }
-
-        .card-icon.call {
-            background: linear-gradient(135deg, rgba(0, 255, 157, 0.2), rgba(0, 243, 255, 0.15));
-            border: 1px solid rgba(0, 255, 157, 0.4);
-            box-shadow: 0 0 20px rgba(0, 255, 157, 0.2);
-        }
-
-        .card-icon.app {
-            background: linear-gradient(135deg, rgba(191, 0, 255, 0.25), rgba(0, 102, 255, 0.2));
-            border: 1px solid rgba(191, 0, 255, 0.45);
-            box-shadow: 0 0 20px rgba(191, 0, 255, 0.25);
-        }
-
-        .card-icon.web {
-            background: linear-gradient(135deg, rgba(255, 0, 170, 0.2), rgba(0, 243, 255, 0.15));
-            border: 1px solid rgba(255, 0, 170, 0.4);
-            box-shadow: 0 0 20px rgba(255, 0, 170, 0.2);
-        }
-
-        .card-content {
-            flex: 1;
-        }
-
-        .card-title {
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 600;
-            font-size: 1.05rem;
-            letter-spacing: 1.5px;
-            margin-bottom: 3px;
-            color: #fff;
-        }
-
-        .card-desc {
-            font-size: 0.85rem;
-            color: rgba(180, 220, 255, 0.7);
-            font-weight: 400;
-        }
-
-        .card-arrow {
-            font-size: 20px;
-            color: var(--neon-cyan);
-            opacity: 0.6;
-            transition: all 0.3s;
-        }
-
-        .card:hover .card-arrow {
-            opacity: 1;
-            transform: translateX(4px);
-            text-shadow: 0 0 10px var(--neon-cyan);
-        }
-
-        /* Footer */
-        .footer {
-            text-align: center;
-            font-size: 0.75rem;
-            color: rgba(0, 243, 255, 0.4);
-            letter-spacing: 2px;
-            margin-top: 8px;
-        }
-
-        .footer span {
-            color: rgba(191, 0, 255, 0.6);
-        }
-
-        /* Scanline effect */
-        .scanlines {
-            position: fixed;
-            inset: 0;
-            background: linear-gradient(
-                to bottom,
-                transparent 50%,
-                rgba(0, 0, 0, 0.05) 50%
-            );
-            background-size: 100% 4px;
-            pointer-events: none;
-            z-index: 100;
-            opacity: 0.3;
-        }
-
-        /* Responsive */
-        @media (max-width: 380px) {
-            .title { font-size: 1.4rem; letter-spacing: 2px; }
-            .card { padding: 16px 18px; }
-            .card-icon { width: 46px; height: 46px; font-size: 20px; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>MONARK // Dark Nebula</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800&family=Cinzel:wght@400;600;700&family=Rajdhani:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --gold: #d4af37;
+  --gold-light: #f0d78c;
+  --platinum: #e5e4e2;
+  --nebula-purple: #6b21a8;
+  --cyan: #22d3ee;
+  --bg: #05020f;
+  --glass: rgba(15, 10, 30, 0.55);
+  --glass-border: rgba(212, 175, 55, 0.28);
+}
+* { margin:0; padding:0; box-sizing:border-box; -webkit-tap-highlight-color:transparent; }
+body {
+  min-height:100vh; min-height:100dvh;
+  background: var(--bg);
+  font-family: 'Rajdhani', sans-serif;
+  color: #e8e0ff;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  position:relative; overflow-x:hidden;
+}
+.stars {
+  position:fixed; inset:0; z-index:0;
+  background-image: 
+    radial-gradient(1px 1px at 20% 30%, #fff, transparent),
+    radial-gradient(1px 1px at 60% 70%, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 50% 50%, #c4b5fd, transparent),
+    radial-gradient(1px 1px at 80% 10%, #fff, transparent),
+    radial-gradient(1px 1px at 10% 80%, #fff, transparent),
+    radial-gradient(1.5px 1.5px at 90% 40%, #f0d78c, transparent);
+  background-size: 220px 220px, 300px 300px, 250px 250px, 180px 180px, 240px 240px, 280px 280px;
+  animation: drift 80s linear infinite;
+  opacity:0.55;
+}
+@keyframes drift { from { transform:translateY(0); } to { transform:translateY(-220px); } }
+.nebula {
+  position:fixed; border-radius:50%; filter:blur(110px); opacity:0.32; z-index:0;
+  animation: pulse 12s ease-in-out infinite;
+}
+.n1 { width:420px; height:420px; background:#7c3aed; top:-160px; left:-120px; }
+.n2 { width:380px; height:380px; background:#db2777; bottom:-140px; right:-100px; animation-delay:-5s; }
+.n3 { width:260px; height:260px; background:#0891b2; top:45%; left:55%; animation-delay:-8s; }
+@keyframes pulse { 0%,100% { transform:scale(1); opacity:0.28; } 50% { transform:scale(1.18); opacity:0.42; } }
+.portal {
+  position:relative; z-index:10;
+  width:100%; max-width:400px; padding:22px 18px 28px;
+  display:flex; flex-direction:column; align-items:center; gap:18px;
+}
+.logo-wrap {
+  width:150px; filter: drop-shadow(0 0 22px rgba(212,175,55,0.45));
+  animation: logoGlow 4.5s ease-in-out infinite;
+}
+@keyframes logoGlow {
+  0%,100% { filter: drop-shadow(0 0 16px rgba(212,175,55,0.35)); }
+  50% { filter: drop-shadow(0 0 32px rgba(212,175,55,0.65)); }
+}
+.logo-wrap img { width:100%; height:auto; display:block; }
+.title {
+  font-family: 'Cinzel', serif; font-weight:700; font-size:1.75rem;
+  letter-spacing:6px; color: var(--gold-light);
+  text-shadow: 0 0 28px rgba(212,175,55,0.4);
+  margin-top:-6px;
+}
+.subtitle {
+  font-size:0.82rem; letter-spacing:3.5px; color:rgba(196,181,253,0.72);
+  text-transform:uppercase; margin-top:-4px;
+}
+.status {
+  display:inline-flex; align-items:center; gap:8px;
+  font-size:0.76rem; color:#a78bfa; letter-spacing:1.5px; margin-top:2px;
+}
+.status-dot {
+  width:7px; height:7px; background:#c4b5fd; border-radius:50%;
+  box-shadow:0 0 10px #c4b5fd; animation:blink 1.8s infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.25} }
+.menu {
+  width:100%; display:flex; flex-direction:column; gap:13px;
+  margin-top:6px;
+}
+.card {
+  position:relative;
+  background: var(--glass);
+  backdrop-filter: blur(22px) saturate(160%);
+  -webkit-backdrop-filter: blur(22px) saturate(160%);
+  border: 1px solid var(--glass-border);
+  border-radius: 20px;
+  padding: 17px 20px;
+  display:flex; align-items:center; gap:15px;
+  text-decoration:none; color:inherit;
+  overflow:hidden;
+  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+  box-shadow: 
+    0 8px 32px rgba(0,0,0,0.35),
+    inset 0 1px 0 rgba(255,255,255,0.06);
+}
+.card::before {
+  content:'';
+  position:absolute; inset:0;
+  background: linear-gradient(115deg, transparent 30%, rgba(255,255,255,0.09) 50%, transparent 70%);
+  transform: translateX(-120%) skewX(-15deg);
+  transition: transform 0.7s ease;
+}
+.card:hover::before, .card:active::before {
+  transform: translateX(120%) skewX(-15deg);
+}
+.card:hover, .card:active {
+  transform: translateY(-4px) scale(1.025);
+  border-color: rgba(212,175,55,0.55);
+  box-shadow: 
+    0 16px 40px rgba(0,0,0,0.45),
+    0 0 35px rgba(212,175,55,0.18),
+    inset 0 1px 0 rgba(255,255,255,0.1);
+}
+.card-icon {
+  width:50px; height:50px; border-radius:15px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:22px; flex-shrink:0;
+  background: linear-gradient(145deg, rgba(212,175,55,0.18), rgba(124,58,237,0.22));
+  border: 1px solid rgba(212,175,55,0.35);
+  box-shadow: 0 0 18px rgba(212,175,55,0.12);
+  transition: all 0.35s ease;
+}
+.card:hover .card-icon {
+  transform: scale(1.08);
+  box-shadow: 0 0 24px rgba(212,175,55,0.25);
+}
+.card-title {
+  font-family:'Orbitron',sans-serif; font-weight:600; font-size:0.98rem;
+  letter-spacing:1.4px; color:#fef3c7; margin-bottom:2px;
+}
+.card-desc { font-size:0.8rem; color:rgba(196,181,253,0.68); }
+.card-arrow {
+  font-size:20px; color:var(--gold); opacity:0.45;
+  transition: all 0.35s ease; margin-left:auto;
+}
+.card:hover .card-arrow {
+  opacity:1; transform: translateX(5px);
+  text-shadow: 0 0 12px var(--gold);
+}
+.footer {
+  display:flex; flex-direction:column; align-items:center; gap:12px;
+  margin-top:10px; width:100%;
+}
+.dashboard-img {
+  width:160px; height:160px;
+  border-radius:18px;
+  object-fit:cover;
+  border:1px solid rgba(34,211,238,0.25);
+  box-shadow: 
+    0 0 30px rgba(34,211,238,0.15),
+    0 8px 24px rgba(0,0,0,0.4);
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+.dashboard-img:hover {
+  transform: scale(1.04);
+  box-shadow: 0 0 40px rgba(34,211,238,0.25);
+}
+.signature {
+  text-align:center;
+  font-size:0.72rem;
+  letter-spacing:1.2px;
+  color:rgba(167,139,250,0.55);
+  line-height:1.5;
+}
+.signature strong {
+  color:rgba(212,175,55,0.75);
+  font-weight:600;
+}
+.portal > * {
+  animation: fadeUp 0.7s ease both;
+}
+.portal > *:nth-child(1) { animation-delay:0.05s; }
+.portal > *:nth-child(2) { animation-delay:0.12s; }
+.portal > *:nth-child(3) { animation-delay:0.18s; }
+.portal > *:nth-child(4) { animation-delay:0.24s; }
+.portal > *:nth-child(5) { animation-delay:0.3s; }
+.portal > *:nth-child(6) { animation-delay:0.4s; }
+@keyframes fadeUp {
+  from { opacity:0; transform:translateY(18px); }
+  to { opacity:1; transform:translateY(0); }
+}
+</style>
 </head>
 <body>
-    <div class="bg-grid"></div>
-    <div class="particles" id="particles"></div>
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-    <div class="orb orb-3"></div>
-    <div class="scanlines"></div>
+<div class="stars"></div>
+<div class="nebula n1"></div>
+<div class="nebula n2"></div>
+<div class="nebula n3"></div>
 
-    <div class="portal">
-        <div class="header">
-            <div class="logo-ring">
-                <div class="logo-icon">◈</div>
-            </div>
-            <h1 class="title">MONARK</h1>
-            <p class="subtitle">Access Portal</p>
-            <div class="status">
-                <div class="status-dot"></div>
-                SYSTÈME EN LIGNE
-            </div>
-        </div>
+<div class="portal">
+  <div class="logo-wrap">
+    <img src="PLACEHOLDER_MONARK" alt="MONARK TEKNOLOGIES">
+  </div>
+  <div class="title">MONARK</div>
+  <div class="subtitle">Dark Nebula Portal</div>
+  <div class="status"><div class="status-dot"></div> SYSTÈME EN LIGNE</div>
 
-        <div class="menu">
-            <!-- Call -->
-            <a href="tel:+15142165549" class="card">
-                <div class="card-icon call">📞</div>
-                <div class="card-content">
-                    <div class="card-title">APPELER</div>
-                    <div class="card-desc">+1 (514) 216-5549</div>
-                </div>
-                <div class="card-arrow">›</div>
-            </a>
+  <div class="menu">
+    <a href="tel:+15142165549" class="card">
+      <div class="card-icon">📞</div>
+      <div style="flex:1">
+        <div class="card-title">APPELER</div>
+        <div class="card-desc">+1 (514) 216-5549</div>
+      </div>
+      <div class="card-arrow">›</div>
+    </a>
+    <a href="https://monarkapp.milele4ever.com" target="_blank" rel="noopener" class="card">
+      <div class="card-icon">⚡</div>
+      <div style="flex:1">
+        <div class="card-title">MONARK APP</div>
+        <div class="card-desc">Ouvrir l'application</div>
+      </div>
+      <div class="card-arrow">›</div>
+    </a>
+    <a href="https://www.milele4ever.com" target="_blank" rel="noopener" class="card">
+      <div class="card-icon">🌐</div>
+      <div style="flex:1">
+        <div class="card-title">MILELE4EVER</div>
+        <div class="card-desc">Site officiel</div>
+      </div>
+      <div class="card-arrow">›</div>
+    </a>
+  </div>
 
-            <!-- Monark App -->
-            <a href="https://monarkapp.milele4ever.com" target="_blank" rel="noopener" class="card">
-                <div class="card-icon app">⚡</div>
-                <div class="card-content">
-                    <div class="card-title">MONARK APP</div>
-                    <div class="card-desc">Ouvrir l'application</div>
-                </div>
-                <div class="card-arrow">›</div>
-            </a>
-
-            <!-- Website -->
-            <a href="https://www.milele4ever.com" target="_blank" rel="noopener" class="card">
-                <div class="card-icon web">🌐</div>
-                <div class="card-content">
-                    <div class="card-title">MILELE4EVER</div>
-                    <div class="card-desc">Visiter le site officiel</div>
-                </div>
-                <div class="card-arrow">›</div>
-            </a>
-        </div>
-
-        <div class="footer">
-            MILELE4EVER <span>//</span> FUTURE ACCESS
-        </div>
+  <div class="footer">
+    <img src="PLACEHOLDER_DASH" alt="Quantum Dashboard" class="dashboard-img">
+    <div class="signature">
+      <strong>Kent Ley</strong> — CEO<br>
+      Tous droits réservés © 2026
     </div>
+  </div>
+</div>
 
-    <script>
-        // Create floating particles
-        const container = document.getElementById('particles');
-        for (let i = 0; i < 35; i++) {
-            const p = document.createElement('div');
-            p.className = 'particle';
-            p.style.left = Math.random() * 100 + '%';
-            p.style.animationDuration = (8 + Math.random() * 15) + 's';
-            p.style.animationDelay = (Math.random() * 10) + 's';
-            p.style.width = p.style.height = (1 + Math.random() * 2) + 'px';
-            if (Math.random() > 0.7) {
-                p.style.background = Math.random() > 0.5 ? '#bf00ff' : '#ff00aa';
-            }
-            container.appendChild(p);
-        }
-
-        // Subtle haptic-like feedback on touch (visual only)
-        document.querySelectorAll('.card').forEach(card => {
-            card.addEventListener('touchstart', () => {
-                card.style.transform = 'scale(0.97)';
-            });
-            card.addEventListener('touchend', () => {
-                card.style.transform = '';
-            });
-        });
-    </script>
+<script>
+document.querySelectorAll('.card').forEach(card => {
+  card.addEventListener('touchstart', () => card.style.transform = 'scale(0.97)');
+  card.addEventListener('touchend', () => card.style.transform = '');
+});
+</script>
 </body>
 </html>
